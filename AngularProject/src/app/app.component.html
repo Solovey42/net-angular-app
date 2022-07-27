@@ -1,0 +1,36 @@
+﻿<h1 class="display-1" align="center">Сайт компании</h1>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="">О компании</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/about">Сотрудники</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<table class="table table-striped" *ngIf="employees">
+    <thead>
+        <tr>
+            <th>Отдел</th>
+            <th>ФИО</th>
+            <th>День рождения</th>
+            <th>Дата приема на работу</th>
+            <th>Зарплата</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employee of employees">
+            <td>{{ employee.department }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.birthday }}</td>
+            <td>{{ employee.dateOfEmployment }}</td>
+            <td>{{ employee.salary }}</td>
+        </tr>
+    </tbody>
+</table>
