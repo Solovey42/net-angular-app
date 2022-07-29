@@ -1,7 +1,7 @@
 const PROXY_CONFIG = [
   {
     context: [
-      "/main",
+      "/company",
     ],
     target: "https://localhost:44352",
     secure: false
