@@ -30,7 +30,9 @@ namespace WebAPI.Controllers
         {
             try
             {
-                return new ObjectResult(_mapper.Map<IEnumerable<EmployeeResult>>(await _employeeService.EmployeeListAsync()));
+                var employee = _mapper.Map<IEnumerable<EmployeeResult>>(await _employeeService.EmployeeListAsync());
+                
+                return new ObjectResult(employee);
             }
             catch
             {

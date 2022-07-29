@@ -6,7 +6,7 @@ namespace WebAPI.Domain.Services
 {
     public interface IEmployeeService
     {
-        Task<IEnumerable<EmployeeResult>> EmployeeListAsync();
+        Task<IEnumerable<Employee>> EmployeeListAsync();
 
         Task<Employee> EmployeeGetByIdAsync(int id);
 

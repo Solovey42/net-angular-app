@@ -19,26 +19,9 @@ namespace WebAPI.Domain.Services
             _departmentRepository = departmentRepository;
         }
 
-        public async Task<IEnumerable<EmployeeResult>> EmployeeListAsync()
+        public async Task<IEnumerable<Employee>> EmployeeListAsync()
         {
-            List<Employee> employees = (List<Employee>)await _employeeRepository.EmployeeListAsync();
-
-            List<Department> departments = (List<Department>)await _departmentRepository.DepartmentListAsync();
-
-            return employees.Select(employe => new EmployeeResult
-            {
-                Id = employe.Id,
-
-                Department = _departmentRepository.DepartmentGetByIdAsync(employe.Id).Result.Name,
-
-                Name = string.Format("{0} {1} {2}", employe.Surname, employe.Name, employe.Patronymic),
-
-                Birthday = employe.Birthday,
-
-                DateOfEmployment = employe.DateOfEmployment,
-
-                Salary = employe.Salary
-            });
+            return await _employeeRepository.EmployeeListAsync();
         }
 
         public async Task<Employee> EmployeeGetByIdAsync(int id)
