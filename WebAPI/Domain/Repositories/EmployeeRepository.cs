@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI.Domain.Models;
 
-namespace WebAPI.Domain.Models.Repositories
+namespace WebAPI.Domain.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
@@ -15,7 +16,7 @@ namespace WebAPI.Domain.Models.Repositories
 
         public async Task<IEnumerable<Employee>> EmployeeListAsync()
         {
-            return await _applicationContext.Employees.ToListAsync();
+            return await _applicationContext.Employees.Include(employee => employee.Department).ToListAsync();
         }
 
         public async Task<Employee> EmployeeGetByIdAsync(int id)
@@ -37,9 +38,10 @@ namespace WebAPI.Domain.Models.Repositories
             return employee;
         }
 
-        public async Task<Employee> DeleteEmployeeAsync(Employee employee)
+        public async Task<Employee> DeleteEmployeeAsync(int id)
         {
-            _applicationContext.Employees.Update(employee);
+            Employee employee = await EmployeeGetByIdAsync(id);
+            _applicationContext.Employees.Remove(employee);
             await _applicationContext.SaveChangesAsync();
             return employee;
         }

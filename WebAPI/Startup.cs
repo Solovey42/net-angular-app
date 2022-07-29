@@ -1,18 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
+using AutoMapper;
 using WebAPI.Domain.Models;
-using WebAPI.Domain.Models.Repositories;
-using WebAPI.Domain.Models.Services;
+using WebAPI.Domain.Repositories;
+using WebAPI.Domain.Services;
+using WebAPI.DTO;
 
 namespace WebAPI
 {
@@ -36,6 +32,19 @@ namespace WebAPI
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
             services.AddScoped<IEmployeeService, EmployeeService>();
+
+            services.AddScoped<IDepartmentService, DepartmentService>();
+
+            services.AddAutoMapper(typeof(AutoMapperConfig));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                    Title = "API", 
+                    Version = "v1" 
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,7 +52,13 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
             }
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 

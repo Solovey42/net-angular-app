@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI.DTO;
 
-namespace WebAPI.Domain.Models.Services
+namespace WebAPI.Domain.Services
 {
     public interface IEmployeeService
     {
-        Task<IEnumerable<EmployeeModel>> EmployeeListAsync();
+        Task<IEnumerable<EmployeeResult>> EmployeeListAsync();
 
         Task<Employee> EmployeeGetByIdAsync(int id);
 
@@ -13,6 +14,6 @@ namespace WebAPI.Domain.Models.Services
 
         Task<Employee> UpdateEmployeeAsync(Employee employee);
 
-        Task<Employee> DeleteEmployeeAsync(Employee employee);
+        Task<Employee> DeleteEmployeeAsync(int id);
     }
 }

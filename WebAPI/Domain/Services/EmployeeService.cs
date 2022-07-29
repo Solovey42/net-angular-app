@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebAPI.Domain.Models.Repositories;
+using WebAPI.Domain.Models;
+using WebAPI.Domain.Repositories;
+using WebAPI.DTO;
 
-namespace WebAPI.Domain.Models.Services
+namespace WebAPI.Domain.Services
 {
     public class EmployeeService : IEmployeeService
     {
@@ -17,14 +19,15 @@ namespace WebAPI.Domain.Models.Services
             _departmentRepository = departmentRepository;
         }
 
-        public async Task<IEnumerable<EmployeeModel>> EmployeeListAsync()
+        public async Task<IEnumerable<EmployeeResult>> EmployeeListAsync()
         {
             List<Employee> employees = (List<Employee>)await _employeeRepository.EmployeeListAsync();
 
             List<Department> departments = (List<Department>)await _departmentRepository.DepartmentListAsync();
 
-            return employees.Select(employe => new EmployeeModel
+            return employees.Select(employe => new EmployeeResult
             {
+                Id = employe.Id,
 
                 Department = _departmentRepository.DepartmentGetByIdAsync(employe.Id).Result.Name,
 
@@ -36,6 +39,11 @@ namespace WebAPI.Domain.Models.Services
 
                 Salary = employe.Salary
             });
+        }
+
+        public async Task<Employee> EmployeeGetByIdAsync(int id)
+        {
+            return await _employeeRepository.EmployeeGetByIdAsync(id);
         }
 
         public async Task<Employee> CreateEmployeeAsync(Employee employee)
@@ -62,21 +70,9 @@ namespace WebAPI.Domain.Models.Services
             }
         }
 
-        public async Task<Employee> DeleteEmployeeAsync(Employee employee)
+        public async Task<Employee> DeleteEmployeeAsync(int id)
         {
-            if (employee != null)
-            {
-                return await _employeeRepository.DeleteEmployeeAsync(employee);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public async Task<Employee> EmployeeGetByIdAsync(int id)
-        {
-            return await _employeeRepository.EmployeeGetByIdAsync(id);
+            return await _employeeRepository.DeleteEmployeeAsync(id);
         }
     }
 }

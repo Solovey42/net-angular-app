@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace WebAPI.Domain.Models.Repositories
+namespace WebAPI.Domain.Repositories
 {
     public interface IEmployeeRepository
     {
@@ -13,6 +13,6 @@ namespace WebAPI.Domain.Models.Repositories
 
         Task<Employee> UpdateEmployeeAsync(Employee employee);
 
-        Task<Employee> DeleteEmployeeAsync(Employee employee);
+        Task<Employee> DeleteEmployeeAsync(int id);
     }
 }

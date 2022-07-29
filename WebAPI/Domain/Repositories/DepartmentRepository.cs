@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI.Domain.Models;
 
-namespace WebAPI.Domain.Models.Repositories
+namespace WebAPI.Domain.Repositories
 {
     public class DepartmentRepository : IDepartmentRepository
     {

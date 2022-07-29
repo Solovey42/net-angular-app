@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI.Domain.Models;
+using WebAPI.DTO;
 
-namespace WebAPI.Domain.Models.Services
+namespace WebAPI.Domain.Services
 {
     public interface IDepartmentService
     {
-        Task<IEnumerable<Department>> DepartmentListAsync();
+        Task<IEnumerable<DepartmentResult>> DepartmentListAsync();
     }
 }
